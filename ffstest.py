@@ -9,7 +9,7 @@ import functools
 import time
 import cProfile
 
-import GillespieTST_0501_rateupdate as TST
+import GillespieTST_0501_pyrgrow as TST
 
 import rgrow
 
@@ -106,9 +106,6 @@ def analyze_pattern(pattern_filename,Gse):
     return [nuc_rate_h,nuc_rate_a,nuc_rate_m]
     
 
-p = {'conc_vec': np.ones(918)*1000e-9}
-p['conc_vec'][0] = 0
-p.update(params)
 
 #a = prop_forward_constvar(10.5, 3, 0.4, p)
 
