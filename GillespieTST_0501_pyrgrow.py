@@ -176,34 +176,6 @@ def fast_total_bonds(spinsys,params):
     return nb/2
 
 
-
-def prop_Li_2_Lip1(Li_configs,Mi,state_Lip1,params,state_A = [0]):
-        
-    # Pick Mi random configs from Li_configs
-    rnd_idx_list = np.random.choice(len(Li_configs),Mi)
-    
-    # Halting conditions -  n_bonds criterion
-    halting_data = {"monte_carlo_steps": 5000, "state_B":state_Lip1, "state_A": state_A} # details of when to halt
-
-    fin_size =[]
-    Lip1_configs =[]
-
-    for rndL1_idx in rnd_idx_list:
-
-        # set random Li config as initial config
-        init_conf=Li_configs[rndL1_idx]
-
-        struct_history = propagate_Gillespie(init_conf,params,halting_data)
-        
-        # store nbonds of final structure
-        fin_size.append(np.count_nonzero(struct_history[-1]))
-                
-        if fin_size[-1] in state_Lip1: # if it reached the desired set of states, save this config
-            Lip1_configs.append(struct_history[-1].copy())    
-    
-    return Lip1_configs,fin_size
-
-
 def prop_Li_2_Lip1_targetC(Li_configs: List[rgrow.PyStateKTAM], CMi,state_Lip1,sys,params,state_A = [0]):
         
     # Pick Mi random configs from Li_configs  # need to keep sampling until we have enough.. 
@@ -235,7 +207,6 @@ def prop_Li_2_Lip1_targetC(Li_configs: List[rgrow.PyStateKTAM], CMi,state_Lip1,s
             rnd_idx_list = np.concatenate((rnd_idx_list,np.random.choice(len(Li_configs),CMi)))
     
     return Lip1_configs,fin_size
-
 
 
 # create Lp ensemble from L2 ensemble of dimers 
